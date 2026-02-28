@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+
+# Go
+backend/*.exe
+backend/tmp/
+
+# Next.js (managed in frontend/.gitignore)
