@@ -13,12 +13,13 @@ type Position struct {
 }
 
 type AvatarConfig struct {
-	ID      string   `json:"id"`
-	Name    string   `json:"name"`
-	Position Position `json:"position"`
-	Color   string   `json:"color"`
-	Scale   float64  `json:"scale"`
-	Visible bool     `json:"visible"`
+	ID            string   `json:"id"`
+	Name          string   `json:"name"`
+	Position      Position `json:"position"`
+	Color         string   `json:"color"`
+	Scale         float64  `json:"scale"`
+	Visible       bool     `json:"visible"`
+	RotationSpeed float64  `json:"rotationSpeed"` // ラジアン/秒
 }
 
 func corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
@@ -48,9 +49,10 @@ func avatarConfigHandler(w http.ResponseWriter, r *http.Request) {
 			Y: 0,
 			Z: 0,
 		},
-		Color:   "#4F46E5",
-		Scale:   1.0,
-		Visible: true,
+		Color:         "#4F46E5",
+		Scale:         1.0,
+		Visible:       true,
+		RotationSpeed: 0.5, // ラジアン/秒（0 で停止）
 	}
 
 	w.Header().Set("Content-Type", "application/json")
