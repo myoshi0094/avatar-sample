@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react";
 import type { AvatarConfig } from "@/types/avatar";
 
-// クライアントサイドのフェッチ先（NEXT_PUBLIC_ プレフィックスで環境変数化可能）
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:8080";
+// クライアントサイドのフェッチ先（相対 URL で Next.js API Route を呼ぶ）
+const BACKEND_URL = "/api";
 
 /**
  * /api/avatar-config をフェッチし、設定を返すクライアントフック。

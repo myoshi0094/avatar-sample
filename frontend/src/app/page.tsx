@@ -2,34 +2,11 @@
 // "use client" なラッパーコンポーネント経由でインポートする
 import AvatarSceneWrapper from "@/components/AvatarSceneWrapper";
 import { ConfigItem } from "@/components/ConfigItem";
-import type { AvatarConfig } from "@/types/avatar";
+import { avatarConfig } from "@/lib/avatarConfig";
 
-// ---------------------------------------------------------------------------
-// Server Component: サーバーサイドでアバター設定をフェッチ
-//
-// Next.js 15 の fetch 拡張:
-//   - cache: "no-store"  → リクエストごとに最新値を取得（SSR 相当）
-//   - next: { revalidate: N } → N 秒ごとに再検証（ISR 相当）
-//   - next: { tags: [...] } → revalidateTag() で任意タイミングで更新
-//
-// ここでは avatar-config が頻繁に変わる想定で "no-store" を使用。
-// ---------------------------------------------------------------------------
-async function fetchAvatarConfig(): Promise<AvatarConfig | null> {
-  try {
-    const res = await fetch("http://localhost:8080/api/avatar-config", {
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-    return res.json() as Promise<AvatarConfig>;
-  } catch {
-    return null;
-  }
-}
-
-export default async function Home() {
-  // RSC でフェッチ → Client Component の initialConfig に渡す
-  // → useAvatarSettings がこの値で即座に初期化されるためローディング状態なし
-  const initialConfig = await fetchAvatarConfig();
+export default function Home() {
+  // 設定を直接インポート → HTTP ラウンドトリップなし、ローディング状態なし
+  const initialConfig = avatarConfig;
 
   return (
     <main className="h-screen flex flex-col bg-gray-950 text-white">
@@ -45,16 +22,7 @@ export default async function Home() {
             Avatar Config
           </span>
 
-          {initialConfig === null ? (
-            <p className="text-red-400 text-xs">
-              Backend へ接続できませんでした —{" "}
-              <code className="bg-gray-800 px-1 rounded">
-                go run ./backend
-              </code>{" "}
-              を確認してください。
-            </p>
-          ) : (
-            <>
+          <>
               <ConfigItem label="ID" value={initialConfig.id} mono />
               <ConfigItem label="Color">
                 <span className="flex items-center gap-1.5">
@@ -83,7 +51,6 @@ export default async function Home() {
                 </span>
               </ConfigItem>
             </>
-          )}
         </div>
       </div>
     </main>
