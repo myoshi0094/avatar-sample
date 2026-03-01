@@ -100,22 +100,28 @@ page.tsx (RSC)
 
 ### 前提条件
 - Node.js 20+
+- pnpm 9+
 - Go 1.21+
 
-### バックエンド起動
+### インストール
 
 ```bash
-go run ./backend
-# → http://localhost:8080
+pnpm install
 ```
 
-### フロントエンド起動
+### 起動（フロント + バックエンド同時）
 
 ```bash
-cd frontend
-npm install
-npm run dev
-# → http://localhost:3000
+pnpm dev
+# frontend → http://localhost:3000
+# backend  → http://localhost:8080
+```
+
+### 個別起動
+
+```bash
+pnpm dev:frontend   # Next.js のみ
+pnpm dev:backend    # Go のみ
 ```
 
 ---
@@ -124,14 +130,14 @@ npm run dev
 
 ```bash
 # テスト実行
-cd frontend && npm test
+pnpm --filter frontend test
 
 # Storybook 起動
-cd frontend && npm run storybook
+pnpm --filter frontend storybook
 # → http://localhost:6006
 
 # Lint / Format
-cd frontend && npm run check
+pnpm --filter frontend check
 ```
 
 ---

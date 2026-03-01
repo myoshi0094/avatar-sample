@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently --names \"frontend,backend\" --prefix-colors \"cyan,green\" \"npm run dev --prefix frontend\" \"go run ./backend/main.go\"",
-    "dev:frontend": "npm run dev --prefix frontend",
+    "dev": "concurrently --names \"frontend,backend\" --prefix-colors \"cyan,green\" \"pnpm --filter frontend dev\" \"go run ./backend/main.go\"",
+    "dev:frontend": "pnpm --filter frontend dev",
     "dev:backend": "go run ./backend/main.go",
-    "build": "npm run build --prefix frontend",
-    "lint": "npm run lint --prefix frontend",
-    "format": "npm run format --prefix frontend"
+    "build": "pnpm --filter frontend build",
+    "lint": "pnpm --filter frontend lint",
+    "format": "pnpm --filter frontend format"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
